@@ -52,9 +52,6 @@ function Home() {
                 <p className="text-center text-gray-four">
                   Todo App made in T3 Stack
                 </p>
-                <p className="text-center text-gray-four">
-                  - The ultimate productivity tool -
-                </p>
               </div>
               <div className="">
                 <Image
