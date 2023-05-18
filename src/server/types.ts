@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// zodによるバリデーションの定義
 export const createInput = z
     .string()
     .min(1, "todo must be at least 1 letter")
