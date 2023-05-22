@@ -6,8 +6,12 @@ import { api } from "~/utils/api";
 export function CreateTodo() {
     const [newTodo, setNewTodo] = useState("");
 
+    // フロントエンドにキャッシュされているtodoデータを書き換える用にキャッシュへのアクセスできるフックを用意
     const trpc = api.useContext();
+    // サーバー側で定義したcreateメソッドを呼び出してる
+    // useMutation:データを変更する操作（POST、PATCH、DELETE等）を行うために使用
     const { mutate } = api.todo.create.useMutation({
+        // onSettled クエリ or ミューテーションが成功したかどうかに関わらず呼ばれる
         onSettled: async () => {
             await trpc.todo.all.invalidate();
         },
