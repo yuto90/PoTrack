@@ -32,6 +32,7 @@ export function CreateTodo() {
                 }
 
                 mutate(newTodo);
+                setNewTodo('');
             }}
             className="flex justify-between gap-3"
         >
