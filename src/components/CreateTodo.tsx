@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { createInput } from "~/server/types";
+import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 
 export function CreateTodo() {
@@ -11,6 +12,29 @@ export function CreateTodo() {
     // サーバー側で定義したcreateメソッドを呼び出してる
     // useMutation:データを変更する操作（POST、PATCH、DELETE等）を行うために使用
     const { mutate } = api.todo.create.useMutation({
+        // mutation が実行される前に発火する関数
+        onMutate: async (newTodo) => {
+            await trpc.todo.all.cancel();
+            const previousTodos = trpc.todo.all.getData();
+            trpc.todo.all.setData(undefined, (prev) => {
+                const optimisticTodo: Todo = {
+                    id: "optimistic-todo-id",
+                    text: newTodo,
+                    isCompleted: false,
+                };
+                if (!prev) return [optimisticTodo];
+                return [optimisticTodo, ...prev];
+            });
+            setNewTodo("");
+            return { previousTodos };
+        },
+        onError: (err, newTodo, context) => {
+            toast.error("An error occurred when creating todo");
+            console.error(err);
+            setNewTodo(newTodo);
+            if (!context) return;
+            trpc.todo.all.setData(undefined, () => context.previousTodos);
+        },
         // onSettled クエリ or ミューテーションが成功したかどうかに関わらず呼ばれる
         onSettled: async () => {
             await trpc.todo.all.invalidate();
@@ -32,7 +56,6 @@ export function CreateTodo() {
                 }
 
                 mutate(newTodo);
-                setNewTodo('');
             }}
             className="flex justify-between gap-3"
         >
