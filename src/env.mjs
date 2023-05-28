@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { createEnv } from "@t3-oss/env-nextjs";
 
+// 開発環境か判定
+const isDevelopment = () => process.env.NODE_ENV === 'development';
+
 export const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
@@ -43,7 +46,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    GITHUB_CLIENT_ID: isDevelopment() ? process.env.GITHUB_CLIENT_ID_DEV : process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: isDevelopment() ? process.env.GITHUB_CLIENT_SECRET_DEV : process.env.GITHUB_CLIENT_SECRET
   },
 });
