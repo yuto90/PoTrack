@@ -3,6 +3,7 @@ import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { CreateTodo } from "~/components/CreateTodo";
 import { Todos } from "~/components/Todos";
+import { isDevelopment } from "~/env.mjs";
 
 function Home() {
   // 認証情報を取得
@@ -10,6 +11,13 @@ function Home() {
   // status という変数には、認証情報の取得状況・認証済みか否かという情報が格納される
   // loading（認証情報の取得中）, unauthenticated（非認証）, authenticated（認証済み） のいずれかが格納される
   const { data: sessionData, status } = useSession();
+
+  const mountPicture = () => {
+    const devPicture = "/images/main-dev.png";
+    const prodPicture = "/images/main.png";
+    return isDevelopment() ? devPicture : prodPicture;
+  }
+
   return (
     <>
       <Head>
@@ -17,10 +25,10 @@ function Home() {
         <meta name="description" content="Full stack todo app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen bg-olive-one p-0 selection:bg-green-two md:py-24 md:px-8">
+      <div className={`min-h-screen ${isDevelopment() ? 'bg-olive-one' : 'bg-gray-three'} p-0 selection:bg-green-two md:py-24 md:px-8`}>
         <main className="mx-auto min-h-screen max-w-none rounded-none bg-cream-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-cream-four">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-three">
-            ToDo List
+            ToDo App
           </h1>
           {status !== "loading" && sessionData && (
             // status が "loading" でない、つまり認証情報の取得が完了している、
@@ -31,7 +39,7 @@ function Home() {
                   <span>Logged in as {sessionData.user?.email}</span>
                 </p>
                 <button
-                  className="mb-8 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 outline-green-one hover:text-green-five"
+                  className={`mb-8 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} hover:text-green-five`}
                   onClick={() => void signOut()}
                 >
                   Sign out
@@ -48,7 +56,7 @@ function Home() {
             // かつ、認証されていない場合に、下記が表示されます
             <div className="flex flex-col items-center">
               <button
-                className="mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 outline-green-one hover:text-green-five"
+                className={`mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} hover:text-green-five`}
                 onClick={() => void signIn()}
               >
                 Sign In
@@ -60,7 +68,8 @@ function Home() {
               </div>
               <div className="">
                 <Image
-                  src="/images/main-img.png"
+                  //src="/images/main-img.png"
+                  src={mountPicture()}
                   width={400}
                   height={400}
                   alt="main-img"

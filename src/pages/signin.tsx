@@ -1,6 +1,7 @@
 import type { InferGetServerSidePropsType } from "next";
 import { getProviders, signIn } from "next-auth/react";
 import Image from "next/image";
+import { isDevelopment } from "~/env.mjs";
 
 export default function SignIn({
     // ここで providers の 型を定義しています
@@ -8,7 +9,7 @@ export default function SignIn({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <>
-            <div className="min-h-screen bg-olive-one p-0 selection:bg-green-two md:py-24 md:px-8">
+            <div className={`min-h-screen ${isDevelopment() ? 'bg-olive-one' : 'bg-gray-three'}p-0 selection:bg-green-two md:py-24 md:px-8`}>
                 <div className="flex flex-col items-center space-y-20 pt-40">
                     <Image
                         src="/images/github-icon.png"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { isDevelopment } from "~/env.mjs";
 import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
@@ -71,7 +72,7 @@ export function CreateTodo() {
                     setNewTodo(e.target.value);
                 }}
             />
-            <button className="group flex items-center rounded-md border-cream-four bg-green-one px-6 py-3 text-lg font-semibold text-gray-five outline outline-2 outline-offset-2 outline-green-one hover:text-green-five focus-visible:text-green-five focus-visible:outline-green-five">
+            <button className={`group flex items-center rounded-md border-cream-four ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} px-6 py-3 text-lg font-semibold text-gray-five outline outline-2 outline-offset-2 outline-green-one hover:text-green-five focus-visible:text-green-five focus-visible:outline-green-five`}>
                 Create
                 <svg
                     className="ml-3 h-4 w-4 text-gray-five group-hover:text-green-five group-focus-visible:text-green-five"

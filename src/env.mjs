@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createEnv } from "@t3-oss/env-nextjs";
 
 // 開発環境か判定
-const isDevelopment = () => process.env.NODE_ENV === 'development';
+export const isDevelopment = () => process.env.NODE_ENV === 'development';
 
 export const env = createEnv({
   /**
