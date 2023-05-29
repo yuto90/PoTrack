@@ -104,6 +104,18 @@ export function Todo({ todo }: TodoProps) {
         },
     });
 
+    const statusColor = () => {
+        if (status === 'BACKLOG') {
+            return 'bg-green-one'
+        } else if (status === 'TODO') {
+            return 'bg-green-two'
+        } else if (status === 'IN_PROGRESS') {
+            return 'bg-green-three'
+        } else {
+            return 'bg-green-four'
+        }
+    }
+
     return (
         <div className="flex items-center justify-between rounded-md border-2 border-gray-one px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
@@ -132,10 +144,9 @@ export function Todo({ todo }: TodoProps) {
                     }}
                 />
                 <span
-                    className={`${status === 'BACKLOG' ? "bg-green-three" : "bg-leaf-one"
-                        } ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
+                    className={`${statusColor()} ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
                 >
-                    {/* {isCompleted ? "Complete" : "In Progress"} */}
+                    {status}
                 </span>
             </div>
             <button
