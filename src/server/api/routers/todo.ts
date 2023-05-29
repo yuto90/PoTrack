@@ -8,7 +8,7 @@ export const todoRouter = createTRPCRouter({
     // queryでクエリを実行できる
     all: protectedProcedure.query(async ({ ctx }) => {
         // prismaで作成されたtodoを作成順に取得
-        // 取得するデータはid, text, isCompletedだけ
+        // 取得するデータはid, text, statusだけ
         const todos = await ctx.prisma.todo.findMany({
             where: {
                 userId: ctx.session.user.id,
@@ -17,10 +17,10 @@ export const todoRouter = createTRPCRouter({
                 createdAt: "desc",
             },
         });
-        return todos.map(({ id, text, isCompleted }) => ({
+        return todos.map(({ id, text, status }) => ({
             id,
             text,
-            isCompleted,
+            status,
         }));
     }),
     // プロシージャの実行前にinputでzodによるバリデーヨンを実施
@@ -37,17 +37,15 @@ export const todoRouter = createTRPCRouter({
             },
         });
     }),
-    toggle: protectedProcedure.input(toggleInput).mutation(({ ctx, input }) => {
-        const { id, is_completed } = input;
-        return ctx.prisma.todo.update({
-            where: {
-                id,
-            },
-            data: {
-                isCompleted: is_completed,
-            },
-        });
-    }),
+    //toggle: protectedProcedure.input(toggleInput).mutation(({ ctx, input }) => {
+    //const { id, is_completed } = input;
+    //return ctx.prisma.todo.update({
+    //where: { id },
+    //data: {
+    //isCompleted: is_completed
+    //},
+    //});
+    //}),
     update: protectedProcedure.input(updateInput).mutation(({ ctx, input }) => {
         const { id, text } = input;
         return ctx.prisma.todo.update({
