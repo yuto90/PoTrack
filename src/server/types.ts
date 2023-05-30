@@ -25,7 +25,8 @@ export const updateInput = z.object({
         .max(50, "todo must be 50 letters or less"),
 });
 
-export const toggleInput = z.object({
+// ステータス変更プルダウンは特定文字列のみを許可
+export const changeStatusInput = z.object({
     id: z.string(),
-    is_completed: z.boolean(),
+    status: z.enum(["BACKLOG", "TODO", "IN_PROGRESS", "COMPLETED"])
 });

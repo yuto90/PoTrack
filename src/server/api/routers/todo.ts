@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { createInput, toggleInput, updateInput } from "~/server/types";
+import { createInput, changeStatusInput, updateInput } from "~/server/types";
 
 // todo用のルーターを定義
 export const todoRouter = createTRPCRouter({
@@ -37,15 +37,15 @@ export const todoRouter = createTRPCRouter({
             },
         });
     }),
-    //toggle: protectedProcedure.input(toggleInput).mutation(({ ctx, input }) => {
-    //const { id, is_completed } = input;
-    //return ctx.prisma.todo.update({
-    //where: { id },
-    //data: {
-    //isCompleted: is_completed
-    //},
-    //});
-    //}),
+    changeStatus: protectedProcedure.input(changeStatusInput).mutation(({ ctx, input }) => {
+        const { id, status } = input;
+        return ctx.prisma.todo.update({
+            where: { id },
+            data: {
+                status: status
+            },
+        });
+    }),
     update: protectedProcedure.input(updateInput).mutation(({ ctx, input }) => {
         const { id, text } = input;
         return ctx.prisma.todo.update({
