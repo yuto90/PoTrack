@@ -21,7 +21,7 @@ export function CreateTodo() {
                 const optimisticTodo: Todo = {
                     id: "optimistic-todo-id",
                     text: newTodo,
-                    isCompleted: false,
+                    status: 'BACKLOG'
                 };
                 if (!prev) return [optimisticTodo];
                 return [optimisticTodo, ...prev];

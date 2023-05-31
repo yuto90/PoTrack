@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
@@ -8,49 +8,12 @@ type TodoProps = {
 };
 
 export function Todo({ todo }: TodoProps) {
-    const { id, text, isCompleted } = todo;
+    const { id, text, status } = todo;
 
     const [currentTodo, setCurrentTodo] = useState(text);
+    const [currentStatus, setCurrentStatus] = useState(status);
 
     const trpc = api.useContext();
-
-    const { mutate: toggleMutation } = api.todo.toggle.useMutation({
-        // todo編集時の楽観的更新
-        onMutate: async ({ id, is_completed }) => {
-            await trpc.todo.all.cancel();
-            const previousTodos = trpc.todo.all.getData();
-            trpc.todo.all.setData(undefined, (prev) => {
-                if (!prev) return previousTodos;
-                return prev.map((t) => {
-                    if (t.id === id) {
-                        return {
-                            ...t,
-                            isCompleted: is_completed,
-                        };
-                    }
-                    return t;
-                });
-            });
-            return { previousTodos };
-        },
-        onSuccess: ({ isCompleted }) => {
-            if (isCompleted) {
-                toast.success("Todo completed 🎉");
-            }
-        },
-        onError: (err, is_completed, context) => {
-            toast.error(
-                `An error occured when marking todo as ${is_completed ? "completed" : "uncompleted"
-                }`
-            );
-            console.error(err);
-            if (!context) return;
-            trpc.todo.all.setData(undefined, () => context.previousTodos);
-        },
-        onSettled: async () => {
-            await trpc.todo.all.invalidate();
-        },
-    });
 
     const { mutate: deleteMutation } = api.todo.delete.useMutation({
         onMutate: async (deleteId) => {
@@ -104,19 +67,61 @@ export function Todo({ todo }: TodoProps) {
         },
     });
 
+    const { mutate: changeStatusMutation } = api.todo.changeStatus.useMutation({
+        onMutate: async ({ id, status }) => {
+            await trpc.todo.all.cancel();
+            const previousTodos = trpc.todo.all.getData();
+            trpc.todo.all.setData(undefined, (prev) => {
+                if (!prev) return previousTodos;
+                return prev.map((t) => {
+                    if (t.id === id) {
+                        return {
+                            ...t,
+                            status: status
+                        };
+                    }
+                    return t;
+                });
+            });
+            setCurrentStatus(currentStatus);
+            return { previousTodos };
+        },
+        onError: (err, _, context) => {
+            toast.error("An error occured when editing status");
+            console.error(err);
+            setCurrentStatus(status);
+            if (!context) return;
+            trpc.todo.all.setData(undefined, () => context.previousTodos);
+        },
+        onSettled: async () => {
+            await trpc.todo.all.invalidate();
+        },
+    });
+
+    // as const オブジェクトのプロパティ全体をreadonly かつリテラル型として扱う
+    const STATUS_LIST = {
+        BACKLOG: 'BACKLOG',
+        TODO: 'TODO',
+        IN_PROGRESS: 'IN_PROGRESS',
+        COMPLETED: 'COMPLETED'
+    } as const;
+    type STATUS_LIST = typeof STATUS_LIST[keyof typeof STATUS_LIST];
+
+    const statusColor = () => {
+        if (status === 'BACKLOG') {
+            return 'bg-green-one'
+        } else if (status === 'TODO') {
+            return 'bg-green-two'
+        } else if (status === 'IN_PROGRESS') {
+            return 'bg-green-three'
+        } else {
+            return 'bg-green-four'
+        }
+    }
+
     return (
         <div className="flex items-center justify-between rounded-md border-2 border-gray-one px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
-                <input
-                    className="h-4 w-4 rounded border border-gray-three bg-cream-four text-green-four focus:border-green-five focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-green-five"
-                    type="checkbox"
-                    name="done"
-                    id={id}
-                    checked={isCompleted}
-                    onChange={(e) => {
-                        toggleMutation({ id, is_completed: e.target.checked });
-                    }}
-                />
                 <input
                     className="ml-5 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two bg-cream-four px-0 pb-1 text-base font-normal text-gray-three placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
                     id={`${todo.id}-text`}
@@ -131,19 +136,18 @@ export function Todo({ todo }: TodoProps) {
                         updateMutation({ id, text: e.target.value });
                     }}
                 />
-                <span
-                    className={`${isCompleted ? "bg-green-three" : "bg-leaf-one"
-                        } ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
+                <select
+                    className={`${statusColor()} ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => changeStatusMutation({ id, status: e.target.value as STATUS_LIST })}
+                    value={status}
                 >
-                    {isCompleted ? "Complete" : "In Progress"}
-                </span>
+                    {Object.values(STATUS_LIST).map((value, i) => <option key={i}>{value}</option>)}
+                </select>
             </div>
             <button
                 type="button"
                 className="group ml-4 flex items-center justify-center rounded-md bg-cream-four p-2 hover:bg-steel-one focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
-                onClick={() => {
-                    deleteMutation(id);
-                }}
+                onClick={() => deleteMutation(id)}
             >
                 <svg
                     className="h-5 w-5 text-steel-three group-hover:text-gray-five"

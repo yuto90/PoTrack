@@ -6,8 +6,8 @@ type ProgressBarProps = {
 
 export function ProgressBar({ todos }: ProgressBarProps) {
     const totalCount = todos.length;
-    const completeCount = todos.filter((todo) => todo.isCompleted).length;
-    const progressCount = todos.filter((todo) => !todo.isCompleted).length;
+    const completeCount = todos.filter((todo) => todo.status === 'COMPLETED').length;
+    const progressCount = todos.filter((todo) => todo.status !== 'COMPLETED').length;
     const completePercentage =
         Math.round((completeCount / totalCount) * 100) || 0;
     const progressPercentage =
