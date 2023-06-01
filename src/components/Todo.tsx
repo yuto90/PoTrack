@@ -104,7 +104,7 @@ export function Todo({ todo }: TodoProps) {
         <div className="flex items-center justify-between rounded-md border-2 border-high-green px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
                 <input
-                    className="bg-gray-four text-high-green ml-5 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two px-0 pb-1 text-base font-normal placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
+                    className="bg-gray-four text-high-green w-2 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two px-0 pb-1 text-base font-normal placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
                     id={`${todo.id}-text`}
                     type="text"
                     placeholder="Enter a todo"
@@ -118,7 +118,7 @@ export function Todo({ todo }: TodoProps) {
                     }}
                 />
                 <select
-                    className={`${statusColor(status)} bg-gray-four ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
+                    className={`${statusColor(status)} bg-gray-four ml-5 rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five`}
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => changeStatusMutation({ id, status: e.target.value as STATUS_LIST })}
                     value={status}
                 >
