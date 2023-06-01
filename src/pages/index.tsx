@@ -25,9 +25,9 @@ function Home() {
         <meta name="description" content="Full stack todo app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={`min-h-screen ${isDevelopment() ? 'bg-olive-one' : 'bg-gray-three'} p-0 selection:bg-green-two md:py-24 md:px-8`}>
-        <main className="mx-auto min-h-screen max-w-none rounded-none bg-cream-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-cream-four">
-          <h1 className="mb-6 text-center text-4xl font-bold text-gray-three">
+      <div className="min-h-screen bg-gray-four p-0 selection:bg-green-two md:py-24 md:px-8">
+        <main className="mx-auto min-h-screen max-w-none rounded-none bg-gray-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
+          <h1 className="mb-6 text-center text-4xl font-bold text-high-green">
             ToDo App
           </h1>
           {status !== "loading" && sessionData && (
@@ -35,11 +35,11 @@ function Home() {
             // かつ、認証されている場合に、下記が表示されます
             <>
               <div className="flex flex-col items-center">
-                <p className="text-l text-white mb-4 text-center">
-                  <span>Logged in as {sessionData.user?.email}</span>
+                <p className="text-l text-white mb-4 text-center text-high-green">
+                  <span>Logged in as {sessionData.user?.name}</span>
                 </p>
                 <button
-                  className={`mb-8 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} hover:text-green-five`}
+                  className="mb-8 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 text-high-green hover:text-gray-four font-semibold bg-gray-four hover:bg-high-green outline outline-2 outline-offset-2 outline-high-green"
                   onClick={() => void signOut()}
                 >
                   Sign out
@@ -56,7 +56,7 @@ function Home() {
             // かつ、認証されていない場合に、下記が表示されます
             <div className="flex flex-col items-center">
               <button
-                className={`mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 font-semibold outline outline-2 outline-offset-2 ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} hover:text-green-five`}
+                className="mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 text-high-green hover:text-gray-four font-semibold bg-gray-four hover:bg-high-green outline outline-2 outline-offset-2 outline-high-green"
                 onClick={() => void signIn()}
               >
                 Sign In

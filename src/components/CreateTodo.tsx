@@ -1,6 +1,5 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { isDevelopment } from "~/env.mjs";
 import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
@@ -61,7 +60,7 @@ export function CreateTodo() {
             className="flex justify-between gap-3"
         >
             <input
-                className="w-full appearance-none rounded border-gray-one py-2 px-3 leading-tight text-gray-four"
+                className="bg-gray-three w-full appearance-none rounded border-gray-one py-2 px-3 leading-tight text-gray-four"
                 type="text"
                 placeholder="New Todo..."
                 name="new-todo"
@@ -72,10 +71,10 @@ export function CreateTodo() {
                     setNewTodo(e.target.value);
                 }}
             />
-            <button className={`group flex items-center rounded-md border-cream-four ${isDevelopment() ? 'outline-green-one' : 'bg-gray-two'} px-6 py-3 text-lg font-semibold text-gray-five outline outline-2 outline-offset-2 outline-green-one hover:text-green-five focus-visible:text-green-five focus-visible:outline-green-five`}>
+            <button className="group flex items-center rounded-md bg-gray-four hover:bg-high-green px-6 py-3 text-lg font-semibold text-high-green hover:text-gray-four outline outline-2 outline-offset-2 outline-high-green  focus-visible:text-green-five focus-visible:outline-green-five">
                 Create
                 <svg
-                    className="ml-3 h-4 w-4 text-gray-five group-hover:text-green-five group-focus-visible:text-green-five"
+                    className="ml-3 h-4 w-4 text-high-green group-hover:text-green-five group-focus-visible:text-green-five"
                     width="32"
                     height="32"
                     viewBox="0 0 32 32"
