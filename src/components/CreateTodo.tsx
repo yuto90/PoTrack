@@ -60,7 +60,7 @@ export function CreateTodo() {
             className="flex justify-between gap-3"
         >
             <input
-                className="bg-gray-three w-full appearance-none rounded border-gray-one py-2 px-3 leading-tight text-gray-four"
+                className="bg-gray-three w-full appearance-none rounded border-gray-one py-2 px-3 leading-tight text-high-green"
                 type="text"
                 placeholder="New Todo..."
                 name="new-todo"
