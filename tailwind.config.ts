@@ -38,6 +38,13 @@ export default {
       leaf: {
         one: "#E0E7A1",
       },
+      high: {
+        green: "#00e89c",
+        blue: "#009dff",
+        orange: "#ff7300",
+        pink: "#e700eb",
+        red: "#ff0000",
+      },
     },
     extend: {},
   },

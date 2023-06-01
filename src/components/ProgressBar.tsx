@@ -1,4 +1,5 @@
 import type { Todo } from "~/server/types";
+import { type STATUS_LIST, statusColor } from "~/utils/helper";
 
 type ProgressBarProps = {
     todos: Todo[];
@@ -7,74 +8,48 @@ type ProgressBarProps = {
 export function ProgressBar({ todos }: ProgressBarProps) {
     const totalCount = todos.length;
     const backlogCount = todos.filter((todo) => todo.status === 'BACKLOG').length;
-    const progressCount = todos.filter((todo) => todo.status === 'IN_PROGRESS').length;
+    const inProgressCount = todos.filter((todo) => todo.status === 'IN_PROGRESS').length;
     const todoCount = todos.filter((todo) => todo.status === 'TODO').length;
     const completedCount = todos.filter((todo) => todo.status === 'COMPLETED').length;
 
     const backlogPercentage =
         Math.round((backlogCount / totalCount) * 100) || 0;
-    const progressPercentage =
-        Math.round((progressCount / totalCount) * 100) || 0;
+    const inProgressPercentage =
+        Math.round((inProgressCount / totalCount) * 100) || 0;
     const todoPercentage =
         Math.round((todoCount / totalCount) * 100) || 0;
     const completedPercentage =
         Math.round((completedCount / totalCount) * 100) || 0;
 
+    const progressData = {
+        'backlog': { title: 'BACKLOG', progress: backlogPercentage },
+        'todo': { title: 'TODO', progress: todoPercentage },
+        'inProgress': { title: 'IN_PROGRESS', progress: inProgressPercentage },
+        'completed': { title: 'COMPLETED', progress: completedPercentage }
+    };
+
+    type progressDataKey = keyof typeof progressData;
+
     return (
         <section className="mt-10">
-            <h3 className="text-xl font-bold text-gray-three">Progress</h3>
+            <h3 className="text-xl font-bold text-high-green">Progress</h3>
             <div className="mt-8 space-y-8">
-                <div>
-                    <div className="flex justify-between text-base font-normal text-gray-three">
-                        <p>Backlog</p>
-                        <p>{backlogPercentage}%</p>
-                    </div>
-                    <div className="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-one">
-                        <div
-                            className="h-4 rounded-full bg-green-two transition-all duration-500 ease-out"
-                            style={{ width: `${backlogPercentage}%` }}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <div className="flex justify-between text-base font-normal text-gray-three">
-                        <p>Todo</p>
-                        <p>{todoPercentage}%</p>
-                    </div>
-                    <div className="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-one">
-                        <div
-                            className="h-4 rounded-full bg-green-three transition-all duration-500 ease-out"
-                            style={{ width: `${todoPercentage}%` }}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <div className="flex justify-between text-base font-normal text-gray-three">
-                        <p>In Progress</p>
-                        <p>{progressPercentage}%</p>
-                    </div>
-                    <div className="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-one">
-                        <div
-                            className="h-4 rounded-full bg-green-four transition-all duration-500 ease-out"
-                            style={{ width: `${progressPercentage}%` }}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <div className="flex justify-between text-base font-normal text-gray-three">
-                        <p>Completed</p>
-                        <p>{completedPercentage}%</p>
-                    </div>
-                    <div className="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-one">
-                        <div
-                            className="h-4 rounded-full bg-green-five transition-all duration-500 ease-out"
-                            style={{ width: `${completedPercentage}%` }}
-                        />
-                    </div>
-                </div>
+                {(Object.keys(progressData) as progressDataKey[]).map((key, index) => {
+                    return (
+                        <div key={index}>
+                            <div className="flex justify-between text-base font-normal">
+                                <p className={`${statusColor(progressData[key]['title'] as STATUS_LIST)}`}>{progressData[key]['title']}</p>
+                                <p className={`${statusColor(progressData[key]['title'] as STATUS_LIST)}`}>{progressData[key]['progress']}%</p>
+                            </div>
+                            <div className="mt-5 h-4 w-full overflow-hidden rounded-full bg-gray-three">
+                                <div
+                                    className="h-4 rounded-full bg-high-green transition-all duration-500 ease-out"
+                                    style={{ width: `${progressData[key]['progress']}%` }}
+                                />
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );

@@ -2,6 +2,7 @@ import { type ChangeEvent, useState } from "react";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
+import { STATUS_LIST, statusColor } from "~/utils/helper";
 
 type TodoProps = {
     todo: Todo;
@@ -98,32 +99,12 @@ export function Todo({ todo }: TodoProps) {
         },
     });
 
-    // as const オブジェクトのプロパティ全体をreadonly かつリテラル型として扱う
-    const STATUS_LIST = {
-        BACKLOG: 'BACKLOG',
-        TODO: 'TODO',
-        IN_PROGRESS: 'IN_PROGRESS',
-        COMPLETED: 'COMPLETED'
-    } as const;
-    type STATUS_LIST = typeof STATUS_LIST[keyof typeof STATUS_LIST];
-
-    const statusColor = () => {
-        if (status === 'BACKLOG') {
-            return 'bg-green-one'
-        } else if (status === 'TODO') {
-            return 'bg-green-two'
-        } else if (status === 'IN_PROGRESS') {
-            return 'bg-green-three'
-        } else {
-            return 'bg-green-four'
-        }
-    }
 
     return (
-        <div className="flex items-center justify-between rounded-md border-2 border-gray-one px-5 py-4">
+        <div className="flex items-center justify-between rounded-md border-2 border-high-green px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
                 <input
-                    className="ml-5 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two bg-cream-four px-0 pb-1 text-base font-normal text-gray-three placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
+                    className="bg-gray-four text-high-green ml-5 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two px-0 pb-1 text-base font-normal placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
                     id={`${todo.id}-text`}
                     type="text"
                     placeholder="Enter a todo"
@@ -137,7 +118,7 @@ export function Todo({ todo }: TodoProps) {
                     }}
                 />
                 <select
-                    className={`${statusColor()} ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
+                    className={`${statusColor(status)} bg-gray-four ml-5 hidden rounded-full  py-0.5 px-2 text-sm font-normal text-gray-five md:block`}
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => changeStatusMutation({ id, status: e.target.value as STATUS_LIST })}
                     value={status}
                 >
@@ -146,11 +127,11 @@ export function Todo({ todo }: TodoProps) {
             </div>
             <button
                 type="button"
-                className="group ml-4 flex items-center justify-center rounded-md bg-cream-four p-2 hover:bg-steel-one focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
+                className="group ml-4 flex items-center justify-center rounded-md bg-gray-four p-2 hover:bg-high-green focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
                 onClick={() => deleteMutation(id)}
             >
                 <svg
-                    className="h-5 w-5 text-steel-three group-hover:text-gray-five"
+                    className="h-5 w-5 text-high-green group-hover:text-gray-five"
                     width="32"
                     height="32"
                     viewBox="0 0 32 32"
