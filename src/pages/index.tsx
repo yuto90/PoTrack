@@ -21,14 +21,14 @@ function Home() {
   return (
     <>
       <Head>
-        <title>Todo App</title>
+        <title>PoTrack</title>
         <meta name="description" content="Full stack todo app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-screen bg-gray-four p-0 selection:bg-green-two md:py-24 md:px-8">
         <main className="mx-auto min-h-screen max-w-none rounded-none bg-gray-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
           <h1 className="mb-6 text-center text-4xl font-bold text-high-green">
-            ToDo App
+            PoTrack
           </h1>
           {status !== "loading" && sessionData && (
             // status が "loading" でない、つまり認証情報の取得が完了している、
