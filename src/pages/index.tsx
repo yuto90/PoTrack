@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { CreateTodo } from "~/components/CreateTodo";
 import { Todos } from "~/components/Todos";
 import { isDevelopment } from "~/env.mjs";
+import { Stopwatch } from "~/components/StopWatch";
 
 function Home() {
   // 認証情報を取得
@@ -27,9 +28,10 @@ function Home() {
       </Head>
       <div className="min-h-screen bg-gray-four p-0 selection:bg-green-two md:py-24 md:px-8">
         <main className="mx-auto min-h-screen max-w-none rounded-none bg-gray-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
-          <h1 className="mb-6 text-center text-4xl font-bold text-high-green">
-            PoTrack
-          </h1>
+          <div className="flex flex-row justify-around">
+            <CreateTodo />
+            <Stopwatch />
+          </div>
           {status !== "loading" && sessionData && (
             // status が "loading" でない、つまり認証情報の取得が完了している、
             // かつ、認証されている場合に、下記が表示されます
@@ -46,7 +48,6 @@ function Home() {
                 </button>
               </div>
               <div>
-                <CreateTodo />
                 <Todos />
               </div>
             </>
