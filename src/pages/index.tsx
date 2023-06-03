@@ -28,10 +28,6 @@ function Home() {
       </Head>
       <div className="min-h-screen bg-gray-four p-0 selection:bg-green-two md:py-24 md:px-8">
         <main className="mx-auto min-h-screen max-w-none rounded-none bg-gray-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
-          <div className="flex flex-row justify-around">
-            <CreateTodo />
-            <Stopwatch />
-          </div>
           {status !== "loading" && sessionData && (
             // status が "loading" でない、つまり認証情報の取得が完了している、
             // かつ、認証されている場合に、下記が表示されます
@@ -48,6 +44,10 @@ function Home() {
                 </button>
               </div>
               <div>
+                <div className="flex flex-row justify-around">
+                  <CreateTodo />
+                  <Stopwatch />
+                </div>
                 <Todos />
               </div>
             </>
@@ -55,28 +55,33 @@ function Home() {
           {status !== "loading" && !sessionData && (
             // status が "loading" でない、つまり認証情報の取得が完了している、
             // かつ、認証されていない場合に、下記が表示されます
-            <div className="flex flex-col items-center">
-              <button
-                className="mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 text-high-green hover:text-gray-four font-semibold bg-gray-four hover:bg-high-green outline outline-2 outline-offset-2 outline-high-green"
-                onClick={() => void signIn()}
-              >
-                Sign In
-              </button>
-              <div className="mb-5 text-xl">
-                <p className="text-center text-gray-four">
-                  Todo App made in T3 Stack
-                </p>
+            <>
+              <h1 className="mb-6 text-center text-4xl font-bold text-high-green">
+                PoTrack
+              </h1>
+              <div className="flex flex-col items-center">
+                <button
+                  className="mb-5 inline-flex cursor-pointer items-center justify-center rounded-md py-2 px-4 text-high-green hover:text-gray-four font-semibold bg-gray-four hover:bg-high-green outline outline-2 outline-offset-2 outline-high-green"
+                  onClick={() => void signIn()}
+                >
+                  Sign In
+                </button>
+                <div className="mb-5 text-xl">
+                  <p className="text-center text-gray-four">
+                    Todo App made in T3 Stack
+                  </p>
+                </div>
+                <div className="">
+                  <Image
+                    //src="/images/main-img.png"
+                    src={mountPicture()}
+                    width={400}
+                    height={400}
+                    alt="main-img"
+                  />
+                </div>
               </div>
-              <div className="">
-                <Image
-                  //src="/images/main-img.png"
-                  src={mountPicture()}
-                  width={400}
-                  height={400}
-                  alt="main-img"
-                />
-              </div>
-            </div>
+            </>
           )}
         </main>
       </div>
