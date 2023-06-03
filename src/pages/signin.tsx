@@ -1,7 +1,7 @@
 import type { InferGetServerSidePropsType } from "next";
 import { getProviders, signIn } from "next-auth/react";
 import Image from "next/image";
-import TplSignIn from "~/components/templates/TplSignin";
+import { TplSignIn } from "~/components/templates/TplSignin";
 
 export default function SignIn({
     // ここで providers の 型を定義しています

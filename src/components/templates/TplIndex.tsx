@@ -5,7 +5,7 @@ import { isDevelopment } from "~/env.mjs";
 import { OrgStopwatch } from "~/components/organisms/OrgStopWatch";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 
-export default function TplIndex() {
+export function TplIndex() {
     // 認証情報を取得
     // sessionDataには認証済であれば認証情報が、認証されていなければｎullが格納される
     // status という変数には、認証情報の取得状況・認証済みか否かという情報が格納される
