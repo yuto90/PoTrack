@@ -4,7 +4,7 @@ import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 
-export function CreateTodo() {
+export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
 
     // フロントエンドにキャッシュされているtodoデータを書き換える用にキャッシュへのアクセスできるフックを用意

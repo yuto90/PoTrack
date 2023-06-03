@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { CreateTodo } from "~/components/CreateTodo";
-import { Todos } from "~/components/Todos";
+import { OrgTodos } from "~/components/organisms/Todos";
 import { isDevelopment } from "~/env.mjs";
-import { Stopwatch } from "~/components/StopWatch";
+import { OrgStopwatch } from "~/components/organisms/OrgStopWatch";
+import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 
 export default function TplIndex() {
     // 認証情報を取得
@@ -39,10 +39,10 @@ export default function TplIndex() {
                             </div>
                             <div>
                                 <div className="flex flex-row justify-around">
-                                    <CreateTodo />
-                                    <Stopwatch />
+                                    <OrgCreateTodo />
+                                    <OrgStopwatch />
                                 </div>
-                                <Todos />
+                                <OrgTodos />
                             </div>
                         </>
                     )}

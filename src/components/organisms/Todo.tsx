@@ -8,7 +8,7 @@ type TodoProps = {
     todo: Todo;
 };
 
-export function Todo({ todo }: TodoProps) {
+export function OrgTodo({ todo }: TodoProps) {
     const { id, text, status } = todo;
 
     const [currentTodo, setCurrentTodo] = useState(text);

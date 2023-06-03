@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-export function Stopwatch() {
+export function OrgStopwatch() {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef(0);

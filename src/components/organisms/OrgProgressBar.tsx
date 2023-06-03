@@ -5,7 +5,7 @@ type ProgressBarProps = {
     todos: Todo[];
 };
 
-export function ProgressBar({ todos }: ProgressBarProps) {
+export function OrgProgressBar({ todos }: ProgressBarProps) {
     const totalCount = todos.length;
     const backlogCount = todos.filter((todo) => todo.status === 'BACKLOG').length;
     const inProgressCount = todos.filter((todo) => todo.status === 'IN_PROGRESS').length;
