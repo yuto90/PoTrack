@@ -2,9 +2,9 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { OrgTodos } from "~/components/organisms/Todos";
 import { isDevelopment } from "~/env.mjs";
-import { OrgStopwatch } from "~/components/organisms/OrgStopWatch";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 import { OrgHeader } from "../organisms/OrgHeader";
+import { OrgStopWatch } from "../organisms/OrgStopWatch";
 
 
 export function TplIndex() {
@@ -34,7 +34,7 @@ export function TplIndex() {
                                 <div>
                                     <div className="flex flex-row justify-around">
                                         <OrgCreateTodo />
-                                        <OrgStopwatch />
+                                        <OrgStopWatch />
                                     </div>
                                     <OrgTodos />
                                 </div>
