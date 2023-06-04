@@ -1,8 +1,8 @@
 import { api } from "~/utils/api";
-import { Todo } from "~/components/Todo";
-import { ProgressBar } from "~/components/ProgressBar";
+import { OrgTodo } from "~/components/organisms/Todo";
+import { OrgProgressBar } from "~/components/organisms/OrgProgressBar";
 
-export function Todos() {
+export function OrgTodos() {
     const { data: todos, isLoading, isError } = api.todo.all.useQuery();
 
     if (isLoading)
@@ -27,11 +27,11 @@ export function Todos() {
             {todos.map((todo) => {
                 return (
                     <section key={todo.id} className="mt-8 space-y-4">
-                        <Todo todo={todo} />
+                        <OrgTodo todo={todo} />
                     </section>
                 );
             })}
-            <ProgressBar todos={todos} />
+            <OrgProgressBar todos={todos} />
         </>
     );
 }
