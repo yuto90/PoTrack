@@ -32,7 +32,7 @@ export function TplIndex() {
                         {status !== "loading" && sessionData && (
                             <>
                                 <div>
-                                    <div className="flex flex-row justify-around">
+                                    <div className="flex flex-col items-center md:flex-row justify-between md:justify-around">
                                         <OrgCreateTodo />
                                         <OrgStopWatch />
                                     </div>

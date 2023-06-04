@@ -7,9 +7,9 @@ export const OrgHeader: React.FC = () => {
     const { data: sessionData, status } = useSession();
     return (
         <>
-            <div className="flex items-center justify-between text-center mx-auto max-w-none rounded-none bg-gray-four px-5 outline-none md:max-w-full md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
+            <div className="flex items-center justify-between text-center mx-auto max-w-none rounded-none bg-gray-four p-2 md:px-8 outline-none md:max-w-full md:rounded-2xl md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
                 {/* </main><div className="flex items-center justify-between"> */}
-                <h1 className="m-4 text-4xl font-bold text-high-green">
+                <h1 className="m-1 md:m-4 text-4xl font-bold text-high-green">
                     PoTrack
                 </h1>
                 <div className="flex gap-5">

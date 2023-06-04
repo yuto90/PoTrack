@@ -66,7 +66,7 @@ export const OrgStopWatch: React.FC = () => {
     };
 
     return (
-        <div className='flex flex-row'>
+        <div className='flex flex-row m-3'>
             <div className='flex flex-col'>
                 <p className='text-high-green text-3xl'>{formatTime(time)}</p>
                 <div className="flex justify-between">

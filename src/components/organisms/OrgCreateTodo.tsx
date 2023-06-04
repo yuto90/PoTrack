@@ -57,7 +57,7 @@ export function OrgCreateTodo() {
 
                 mutate(newTodo);
             }}
-            className="flex justify-between gap-3 w-4/5"
+            className="flex justify-between gap-3 w-auto md:w-4/5"
         >
             <input
                 className="bg-gray-three w-full appearance-none rounded border-gray-one py-2 px-3 leading-tight text-high-green"
