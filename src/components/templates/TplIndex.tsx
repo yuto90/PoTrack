@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { OrgTodos } from "~/components/organisms/Todos";
+import { OrgTodos } from "~/components/organisms/OrgTodos";
 import { isDevelopment } from "~/env.mjs";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 import { OrgHeader } from "../organisms/OrgHeader";
