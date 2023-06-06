@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import { OrgTodo } from "~/components/organisms/Todo";
+import { OrgTodo } from "~/components/organisms/OrgTodo";
 import { OrgProgressBar } from "~/components/organisms/OrgProgressBar";
 
 export function OrgTodos() {
