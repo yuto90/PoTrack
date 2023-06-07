@@ -15,7 +15,7 @@ export const statusColor = (status: STATUS_LIST) => {
     } else if (status === 'IN_PROGRESS') {
         return 'text-high-pink'
     } else {
-        return 'text-high-red'
+        return 'text-high-tomato'
     }
 }
 

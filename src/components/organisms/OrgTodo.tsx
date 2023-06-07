@@ -153,7 +153,7 @@ export function OrgTodo({ todo }: TodoProps) {
                 onClick={() => deleteMutation(id)}
             >
                 <svg
-                    className="h-5 w-5 text-high-green group-hover:text-gray-five"
+                    className="h-5 w-5 text-high-red group-hover:text-gray-five"
                     width="32"
                     height="32"
                     viewBox="0 0 32 32"

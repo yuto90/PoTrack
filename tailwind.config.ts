@@ -41,8 +41,9 @@ export default {
       high: {
         green: "#00e89c",
         blue: "#009dff",
-        orange: "#ff7300",
+        orange: "#ffa500",
         pink: "#e700eb",
+        tomato: "#ff6347",
         red: "#ff0000",
       },
     },
