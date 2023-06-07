@@ -18,3 +18,11 @@ export const statusColor = (status: STATUS_LIST) => {
         return 'text-high-red'
     }
 }
+
+// 時間をhh:mm:ss形式に変換
+export const formatTime = (time: number) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};

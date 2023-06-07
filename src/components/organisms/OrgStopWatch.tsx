@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { formatTime } from '~/utils/helper';
 
 export const OrgStopWatch: React.FC = () => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
@@ -57,17 +58,9 @@ export const OrgStopWatch: React.FC = () => {
         localStorage.setItem('time', '0');
     };
 
-    // 時間をhh:mm:ss形式に変換
-    const formatTime = (time: number) => {
-        const hours = Math.floor(time / 3600);
-        const minutes = Math.floor((time % 3600) / 60);
-        const seconds = time % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    };
-
     return (
         <div className='flex flex-row m-3'>
-            <div className='flex flex-col'>
+            <div className='flex flex-col w-32'>
                 <p className='text-high-green text-3xl'>{formatTime(time)}</p>
                 <div className="flex justify-between">
                     {isRunning

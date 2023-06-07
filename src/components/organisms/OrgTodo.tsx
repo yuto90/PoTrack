@@ -2,7 +2,7 @@ import { type ChangeEvent, useState } from "react";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
-import { STATUS_LIST, statusColor } from "~/utils/helper";
+import { STATUS_LIST, formatTime, statusColor } from "~/utils/helper";
 
 type TodoProps = {
     todo: Todo;
@@ -15,6 +15,8 @@ export function OrgTodo({ todo }: TodoProps) {
     const [currentStatus, setCurrentStatus] = useState(status);
 
     const trpc = api.useContext();
+
+    const time = Number(localStorage.getItem('time'));
 
     const { mutate: deleteMutation } = api.todo.delete.useMutation({
         onMutate: async (deleteId) => {
@@ -99,10 +101,14 @@ export function OrgTodo({ todo }: TodoProps) {
         },
     });
 
-
     return (
         <div className="flex items-center justify-between rounded-md border-2 border-high-green px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
+                <div className="text-high-green pr-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                    </svg>
+                </div>
                 <input
                     className="bg-gray-four text-high-green w-2 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two px-0 pb-1 text-base font-normal placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
                     id={`${todo.id}-text`}
@@ -125,6 +131,22 @@ export function OrgTodo({ todo }: TodoProps) {
                     {Object.values(STATUS_LIST).map((value, i) => <option key={i}>{value}</option>)}
                 </select>
             </div>
+
+            <div className="flex flex-row">
+                <div className="text-high-green pr-5">
+                    <button
+                        type="button"
+                        className="group ml-4 flex items-center justify-center rounded-md hover:text-gray-four bg-gray-four p-2 hover:bg-high-green focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
+                    //onClick={ }
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                        </svg>
+                    </button>
+                </div>
+                <p className="text-high-green text-lg leading-10">{formatTime(Number(time))}</p>
+            </div>
+
             <button
                 type="button"
                 className="group ml-4 flex items-center justify-center rounded-md bg-gray-four p-2 hover:bg-high-green focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
