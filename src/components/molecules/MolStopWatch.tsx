@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { formatTime } from '~/utils/helper';
 
-export const OrgStopWatch: React.FC = () => {
+export const MolStopWatch: React.FC = () => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
     const [time, setTime] = useState<number>(Number(localStorage.getItem('time')) || 0);
 
@@ -59,15 +59,15 @@ export const OrgStopWatch: React.FC = () => {
     };
 
     return (
-        <div className='flex flex-row m-3'>
-            <div className='flex flex-col w-32'>
-                <p className='text-high-green text-3xl'>{formatTime(time)}</p>
+        <div className='flex flex-row text-high-green'>
+            <div className='flex flex-col'>
+                <p className=' text-3xl'>{formatTime(time)}</p>
                 <div className="flex justify-between">
                     {isRunning
-                        ? <button className='text-high-green' onClick={handleStop}>Stop</button>
-                        : <button className='text-high-green' onClick={handleStart}>Start</button>
+                        ? <button onClick={handleStop}>Stop</button>
+                        : <button onClick={handleStart}>Start</button>
                     }
-                    <button className='text-high-green' onClick={handleReset}>Reset</button>
+                    <button onClick={handleReset}>Reset</button>
                 </div>
             </div>
         </div>
