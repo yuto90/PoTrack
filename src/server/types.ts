@@ -11,11 +11,17 @@ type RouterOutput = inferRouterOutputs<AppRouter>;
 type allTodosOutput = RouterOutput["todo"]["all"];
 export type Todo = allTodosOutput[number];
 
-// zodによるバリデーションの定義
-export const createInput = z
-    .string()
-    .min(1, "1文字以上で入力してください")
-    .max(50, "50文字以下で入力してください");
+// todo作成時にユーザーから入力される値のバリデーション
+export const createInput = z.object({
+    // 入力されたtodo
+    text: z
+        .string()
+        .min(1, "1文字以上で入力してください")
+        .max(50, "50文字以下で入力してください"),
+    // ストップウォッチの値
+    time: z.number()
+})
+
 
 export const updateInput = z.object({
     id: z.string(),

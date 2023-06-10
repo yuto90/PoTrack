@@ -8,7 +8,7 @@ export const todoRouter = createTRPCRouter({
     // queryでクエリを実行できる
     all: protectedProcedure.query(async ({ ctx }) => {
         // prismaで作成されたtodoを作成順に取得
-        // 取得するデータはid, text, statusだけ
+        // 取得するデータはid, text, status, timeだけ
         const todos = await ctx.prisma.todo.findMany({
             where: {
                 userId: ctx.session.user.id,
@@ -17,18 +17,21 @@ export const todoRouter = createTRPCRouter({
                 createdAt: "desc",
             },
         });
-        return todos.map(({ id, text, status }) => ({
+        return todos.map(({ id, text, status, time }) => ({
             id,
             text,
             status,
+            time
         }));
     }),
-    // プロシージャの実行前にinputでzodによるバリデーヨンを実施
+    // プロシージャの実行前にinputでzodによるバリデーションを実施
     // mutaionで更新処理を実行できる
     create: protectedProcedure.input(createInput).mutation(({ ctx, input }) => {
+        const { text, time } = input;
         return ctx.prisma.todo.create({
             data: {
-                text: input,
+                text: text,
+                time: time,
                 user: {
                     connect: {
                         id: ctx.session.user.id,
@@ -37,6 +40,7 @@ export const todoRouter = createTRPCRouter({
             },
         });
     }),
+    // update
     changeStatus: protectedProcedure.input(changeStatusInput).mutation(({ ctx, input }) => {
         const { id, status } = input;
         return ctx.prisma.todo.update({

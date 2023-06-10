@@ -7,6 +7,8 @@ import { api } from "~/utils/api";
 export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
 
+    const time = Number(localStorage.getItem('time'));
+
     // フロントエンドにキャッシュされているtodoデータを書き換える用にキャッシュへのアクセスできるフックを用意
     const trpc = api.useContext();
     // サーバー側で定義したcreateメソッドを呼び出してる
@@ -14,12 +16,15 @@ export function OrgCreateTodo() {
     const { mutate } = api.todo.create.useMutation({
         // mutation が実行される前に発火する関数
         onMutate: async (newTodo) => {
+            const { text, time } = newTodo;
+
             await trpc.todo.all.cancel();
             const previousTodos = trpc.todo.all.getData();
             trpc.todo.all.setData(undefined, (prev) => {
                 const optimisticTodo: Todo = {
                     id: "optimistic-todo-id",
-                    text: newTodo,
+                    text: text,
+                    time: time,
                     status: 'BACKLOG'
                 };
                 if (!prev) return [optimisticTodo];
@@ -29,9 +34,10 @@ export function OrgCreateTodo() {
             return { previousTodos };
         },
         onError: (err, newTodo, context) => {
+            const { text } = newTodo;
             toast.error("An error occurred when creating todo");
             console.error(err);
-            setNewTodo(newTodo);
+            setNewTodo(text);
             if (!context) return;
             trpc.todo.all.setData(undefined, () => context.previousTodos);
         },
@@ -48,14 +54,16 @@ export function OrgCreateTodo() {
                 //* createInputはzodで作成したバリデーションのスキーマ
                 //* クライアント側でもzodのバリデーションを流用できる。
                 //* .safeParseｒとすると引数に渡されてる値を検証できる
-                const result = createInput.safeParse(newTodo);
+                const input = { text: newTodo, time: time };
+                const result = createInput.safeParse(input);
 
+                // バリデーションに失敗したらZotErrorオブジェクトのエラー配列を結合してトーストに表示
                 if (!result.success) {
                     toast.error(result.error.format()._errors.join("\n"));
                     return;
                 }
 
-                mutate(newTodo);
+                mutate(input);
             }}
             className="flex justify-between gap-3 w-auto md:w-4/5"
         >
