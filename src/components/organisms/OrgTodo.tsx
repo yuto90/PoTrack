@@ -9,14 +9,12 @@ type TodoProps = {
 };
 
 export function OrgTodo({ todo }: TodoProps) {
-    const { id, text, status } = todo;
+    const { id, text, status, time } = todo;
 
     const [currentTodo, setCurrentTodo] = useState(text);
     const [currentStatus, setCurrentStatus] = useState(status);
 
     const trpc = api.useContext();
-
-    const time = Number(localStorage.getItem('time'));
 
     const { mutate: deleteMutation } = api.todo.delete.useMutation({
         onMutate: async (deleteId) => {
