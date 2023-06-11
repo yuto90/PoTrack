@@ -4,7 +4,7 @@ import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import { MolInputText } from "../molecules/MolInputText";
-import { OrgStopWatch } from "../molecules/OrgStopWatch";
+import { OrgStopWatch } from "./OrgStopWatch";
 
 export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
@@ -65,6 +65,7 @@ export function OrgCreateTodo() {
         }
 
         mutate(input)
+
     }
 
     // input内の値が変化した時useStateの更新用関数で変数を更新

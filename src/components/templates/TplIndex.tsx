@@ -5,7 +5,7 @@ import { isDevelopment } from "~/env.mjs";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 import { OrgHeader } from "../organisms/OrgHeader";
 import { MolInputText } from "../molecules/MolInputText";
-import { OrgStopWatch } from "../molecules/OrgStopWatch";
+import { OrgStopWatch } from "../organisms/OrgStopWatch";
 
 
 export function TplIndex() {
