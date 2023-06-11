@@ -4,8 +4,6 @@ import { OrgTodos } from "~/components/organisms/OrgTodos";
 import { isDevelopment } from "~/env.mjs";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 import { OrgHeader } from "../organisms/OrgHeader";
-import { MolInputText } from "../molecules/MolInputText";
-import { OrgStopWatch } from "../organisms/OrgStopWatch";
 
 
 export function TplIndex() {
@@ -32,10 +30,7 @@ export function TplIndex() {
                      かつ、認証されている場合に、下記が表示される */}
                         {status !== "loading" && sessionData && (
                             <>
-                                <div className="flex flex-col items-center md:flex-row justify-between md:justify-around">
-                                    <OrgCreateTodo />
-                                    <OrgStopWatch />
-                                </div>
+                                <OrgCreateTodo />
                                 <OrgTodos />
                             </>
                         )}

@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { formatTime } from '~/utils/helper';
 
-export const OrgStopWatch: React.FC = () => {
+interface Props {
+    reset: boolean
+}
+
+export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
     const [time, setTime] = useState<number>(Number(localStorage.getItem('time')) || 0);
 
@@ -34,6 +38,11 @@ export const OrgStopWatch: React.FC = () => {
         // 時間が変更されるたびにローカルストレージに保存
         localStorage.setItem('time', String(time));
     }, [time]);
+
+    // OrgCreateTodoのリセットフラグが更新されたら発火
+    useEffect(() => {
+        handleReset()
+    }, [reset]);
 
     const handleStart = () => {
         // ストップウォッチが動作中でなければ開始
