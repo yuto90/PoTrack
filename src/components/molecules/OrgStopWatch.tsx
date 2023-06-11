@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { formatTime } from '~/utils/helper';
 
-export const MolStopWatch: React.FC = () => {
+export const OrgStopWatch: React.FC = () => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
     const [time, setTime] = useState<number>(Number(localStorage.getItem('time')) || 0);
 

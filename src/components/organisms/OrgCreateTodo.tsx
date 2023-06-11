@@ -4,7 +4,7 @@ import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import { MolInputText } from "../molecules/MolInputText";
-import { MolStopWatch } from "../molecules/MolStopWatch";
+import { OrgStopWatch } from "../molecules/OrgStopWatch";
 
 export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
@@ -73,19 +73,14 @@ export function OrgCreateTodo() {
     };
 
     return (
-        <div>
-            <div className="flex flex-col items-center md:flex-row justify-between md:justify-around">
-                <div className="gap-3 w-auto md:w-9/12">
-                    <MolInputText
-                        btnText="Create"
-                        inputValue={newTodo}
-                        inputPlaceholder="New Todo..."
-                        onChange={overwriteTodo}
-                        onSubmit={createTodo}
-                    />
-                </div>
-                <MolStopWatch />
-            </div>
+        <div className="gap-3 w-auto md:w-9/12">
+            <MolInputText
+                btnText="Create"
+                inputValue={newTodo}
+                inputPlaceholder="New Todo..."
+                onChange={overwriteTodo}
+                onSubmit={createTodo}
+            />
         </div>
     );
 }
