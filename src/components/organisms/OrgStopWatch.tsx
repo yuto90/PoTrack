@@ -69,8 +69,8 @@ export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
 
     return (
         <div className='flex flex-row text-high-green'>
-            <div className='flex flex-col'>
-                <p className=' text-3xl'>{formatTime(time)}</p>
+            <div className='flex flex-col md:w-32 text-center'>
+                <input className='text-3xl bg-gray-four' value={formatTime(time)} />
                 <div className="flex justify-between">
                     {isRunning
                         ? <button onClick={handleStop}>Stop</button>
