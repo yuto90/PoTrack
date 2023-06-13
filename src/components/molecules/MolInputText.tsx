@@ -1,3 +1,5 @@
+import { type ChangeEvent, type FormEvent } from "react"
+
 interface Props {
     btnText?: string
     inputValue: string
@@ -9,7 +11,7 @@ interface Props {
 export const MolInputText: React.FC<Props> = ({ btnText, inputValue, inputPlaceholder, onChange, onSubmit }) => {
     return (
         <form
-            onSubmit={(e) => {
+            onSubmit={(e: FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
                 onSubmit();
             }}
@@ -20,7 +22,7 @@ export const MolInputText: React.FC<Props> = ({ btnText, inputValue, inputPlaceh
                 type="text"
                 placeholder={inputPlaceholder ?? ''}
                 value={inputValue}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
             />
             <div className="flex">
                 <button className="group flex items-center rounded-md bg-gray-four hover:bg-high-green px-6 py-3 text-lg font-semibold text-high-green hover:text-gray-four outline outline-2 outline-offset-2 outline-high-green  focus-visible:text-green-five focus-visible:outline-green-five">

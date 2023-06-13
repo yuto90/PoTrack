@@ -113,7 +113,7 @@ export function OrgTodo({ todo }: TodoProps) {
                     type="text"
                     placeholder="Enter a todo"
                     value={currentTodo}
-                    onChange={(e) => {
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         setCurrentTodo(e.target.value);
                     }}
                     // フィールドへのフォーカスが外れた時にupdateMutationが実行
