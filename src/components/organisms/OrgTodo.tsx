@@ -2,7 +2,7 @@ import { type ChangeEvent, useState } from "react";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
-import { STATUS_LIST, formatTime, statusColor } from "~/utils/helper";
+import { STATUS_LIST, convertTime, statusColor } from "~/utils/helper";
 
 type TodoProps = {
     todo: Todo;
@@ -142,7 +142,7 @@ export function OrgTodo({ todo }: TodoProps) {
                         </svg>
                     </button>
                 </div>
-                <p className="text-high-green text-lg leading-10">{formatTime(Number(time))}</p>
+                <p className="text-high-green text-lg leading-10">{convertTime(Number(time))}</p>
             </div>
 
             <button
