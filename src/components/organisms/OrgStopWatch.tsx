@@ -65,6 +65,7 @@ export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
     // 時間をリセットし、ストップウォッチを停止
     const handleReset = () => {
         setTime(0);
+        setHhmmss('00:00:00')
         setIsRunning(false);
         if (intervalRef.current) clearInterval(intervalRef.current);
         localStorage.setItem('time', '0');
@@ -86,7 +87,6 @@ export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
         <div className='flex flex-row text-high-green'>
             <div className='flex flex-col md:w-32 text-center'>
                 <input
-                    type='tel'
                     className='text-3xl bg-gray-four'
                     onFocus={() => { handleStop() }}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => { handleTime(e.target.value) }}
