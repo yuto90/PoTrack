@@ -3,6 +3,7 @@ import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
 import { STATUS_LIST, convertTime, statusColor } from "~/utils/helper";
+import { AtomButton } from "../atoms/AtomButton";
 
 type TodoProps = {
     todo: Todo;
@@ -99,13 +100,19 @@ export function OrgTodo({ todo }: TodoProps) {
         },
     });
 
+    const log = () => {
+        console.log('hoge');
+    }
+
     return (
         <div className="flex items-center justify-between rounded-md border-2 border-high-green px-5 py-4">
             <div className="flex w-full max-w-lg items-center justify-start">
                 <div className="text-high-green pr-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                    </svg>
+                    <AtomButton onClick={() => log()}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                        </svg>
+                    </AtomButton>
                 </div>
                 <input
                     className="bg-gray-four text-high-green w-2 flex-1 text-ellipsis rounded-none border-x-0 border-t-0 border-b border-dashed border-b-gray-two px-0 pb-1 text-base font-normal placeholder:text-gray-two focus:border-gray-three focus:outline-none focus:ring-0"
@@ -131,25 +138,19 @@ export function OrgTodo({ todo }: TodoProps) {
             </div>
 
             <div className="flex flex-row">
+                {/*  todo */}
                 <div className="text-high-green pr-5">
-                    <button
-                        type="button"
-                        className="group ml-4 flex items-center justify-center rounded-md hover:text-gray-four bg-gray-four p-2 hover:bg-high-green focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
-                    //onClick={ }
-                    >
+                    <AtomButton onClick={() => log()}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
                         </svg>
-                    </button>
+                    </AtomButton>
                 </div>
                 <p className="text-high-green text-lg leading-10">{convertTime(Number(time))}</p>
             </div>
 
-            <button
-                type="button"
-                className="group ml-4 flex items-center justify-center rounded-md bg-gray-four p-2 hover:bg-high-green focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-five"
-                onClick={() => deleteMutation(id)}
-            >
+
+            <AtomButton onClick={() => deleteMutation(id)}>
                 <svg
                     className="h-5 w-5 text-high-red group-hover:text-gray-five"
                     width="32"
@@ -170,7 +171,8 @@ export function OrgTodo({ todo }: TodoProps) {
                         </clipPath>
                     </defs>
                 </svg>
-            </button>
+            </AtomButton>
+
         </div>
     );
 }
