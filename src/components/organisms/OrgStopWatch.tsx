@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, type ChangeEvent } from 'react';
+import { convertTime } from '~/utils/helper';
 
-export const OrgStopWatch: React.FC = () => {
+interface Props {
+    reset: boolean
+}
+
+export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
     const [time, setTime] = useState<number>(Number(localStorage.getItem('time')) || 0);
+    // hhmmss形式の文字列を管理
+    const [hhmmss, setHhmmss] = useState<string>('00:00:00');
 
     // ローカルストレージからストップウォッチの状態を取得するか、初期値falseを設定
     const [isRunning, setIsRunning] = useState<boolean>(localStorage.getItem('isRunning') === 'true');
@@ -34,6 +41,11 @@ export const OrgStopWatch: React.FC = () => {
         localStorage.setItem('time', String(time));
     }, [time]);
 
+    // OrgCreateTodoのリセットフラグが更新されたら発火
+    useEffect(() => {
+        handleReset()
+    }, [reset]);
+
     const handleStart = () => {
         // ストップウォッチが動作中でなければ開始
         if (!isRunning) {
@@ -46,35 +58,46 @@ export const OrgStopWatch: React.FC = () => {
         if (isRunning) {
             setIsRunning(false);
             if (intervalRef.current) clearInterval(intervalRef.current);
+            setHhmmss(convertTime(time));
         }
     };
 
     // 時間をリセットし、ストップウォッチを停止
     const handleReset = () => {
         setTime(0);
+        setHhmmss('00:00:00')
         setIsRunning(false);
         if (intervalRef.current) clearInterval(intervalRef.current);
         localStorage.setItem('time', '0');
     };
 
-    // 時間をhh:mm:ss形式に変換
-    const formatTime = (time: number) => {
-        const hours = Math.floor(time / 3600);
-        const minutes = Math.floor((time % 3600) / 60);
-        const seconds = time % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    const handleTime = (editTime: string) => {
+        const [hours, minutes, seconds] = editTime.split(':');
+        const secondsTime = Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+
+        localStorage.setItem('time', String(secondsTime));
+
+        // 修正済み文字列を時間に変換されたものを格納
+        setTime(secondsTime);
+        // 修正済文字列を格納
+        setHhmmss(editTime);
     };
 
     return (
-        <div className='flex flex-row m-3'>
-            <div className='flex flex-col'>
-                <p className='text-high-green text-3xl'>{formatTime(time)}</p>
+        <div className='flex flex-row text-high-green'>
+            <div className='flex flex-col md:w-32 text-center'>
+                <input
+                    className='text-3xl bg-gray-four'
+                    onFocus={() => { handleStop() }}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => { handleTime(e.target.value) }}
+                    onBlur={() => { handleStart() }}
+                    value={isRunning ? convertTime(time) : hhmmss} />
                 <div className="flex justify-between">
                     {isRunning
-                        ? <button className='text-high-green' onClick={handleStop}>Stop</button>
-                        : <button className='text-high-green' onClick={handleStart}>Start</button>
+                        ? <button onClick={handleStop}>Stop</button>
+                        : <button onClick={handleStart}>Start</button>
                     }
-                    <button className='text-high-green' onClick={handleReset}>Reset</button>
+                    <button onClick={handleReset}>Reset</button>
                 </div>
             </div>
         </div>

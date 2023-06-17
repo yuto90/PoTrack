@@ -59,6 +59,7 @@ model Todo {
     updatedAt DateTime   @updatedAt
     text      String
     userId    String
+    time      Int        @default(0)
     status    TaskStatus @default(BACKLOG)
     user      User       @relation(fields: [userId], references: [id])
 }

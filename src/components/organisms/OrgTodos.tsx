@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import { OrgTodo } from "~/components/organisms/Todo";
+import { OrgTodo } from "~/components/organisms/OrgTodo";
 import { OrgProgressBar } from "~/components/organisms/OrgProgressBar";
 
 export function OrgTodos() {
@@ -10,7 +10,7 @@ export function OrgTodos() {
             <div className="flex items-center justify-center">
                 <div
                     style={{ borderTopColor: "transparent" }}
-                    className="border-blue-200 mt-32 h-10 w-10 animate-spin rounded-full border-4"
+                    className="text-high-green border-blue-200 mt-32 h-10 w-10 animate-spin rounded-full border-4"
                 />
                 <p className="text-high-green mt-32 ml-4 text-xl">loading...</p>
             </div>
