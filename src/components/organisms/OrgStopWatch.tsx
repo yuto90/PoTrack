@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef, type ChangeEvent } from 'react';
+import { useResetTimeState } from '~/hooks/resetTimeState';
 import { convertTime } from '~/utils/helper';
 
-interface Props {
-    reset: boolean
-}
-
-export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
+export const OrgStopWatch: React.FC = () => {
     // ローカルストレージから前回の時間を取得するか、初期値0を設定
     const [time, setTime] = useState<number>(Number(localStorage.getItem('time')) || 0);
     // hhmmss形式の文字列を管理
@@ -41,10 +38,12 @@ export const OrgStopWatch: React.FC<Props> = ({ reset }) => {
         localStorage.setItem('time', String(time));
     }, [time]);
 
-    // OrgCreateTodoのリセットフラグが更新されたら発火
+    const resetFlg = useResetTimeState((state) => state.resetFlg);
+
+    // OrgCreateTodoでリセットフラグが更新されたら発火
     useEffect(() => {
         handleReset()
-    }, [reset]);
+    }, [resetFlg]);
 
     const handleStart = () => {
         // ストップウォッチが動作中でなければ開始

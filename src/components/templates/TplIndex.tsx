@@ -4,6 +4,7 @@ import { OrgTodos } from "~/components/organisms/OrgTodos";
 import { isDevelopment } from "~/env.mjs";
 import { OrgCreateTodo } from "../organisms/OrgCreateTodo";
 import { OrgHeader } from "../organisms/OrgHeader";
+import { OrgStopWatch } from "../organisms/OrgStopWatch";
 
 
 export function TplIndex() {
@@ -25,12 +26,14 @@ export function TplIndex() {
                 <OrgHeader />
                 <div className="min-h-screen  p-0 selection:bg-green-two md:py-24 md:px-8">
                     <main className="mx-auto min-h-screen max-w-none rounded-none bg-gray-four px-5 pt-24 pb-10 outline-none md:max-w-[60rem] md:rounded-2xl md:px-8 md:outline md:outline-4 md:outline-offset-8 md:outline-high-green">
-
                         {/* status が "loading" でない、つまり認証情報の取得が完了している、
                      かつ、認証されている場合に、下記が表示される */}
                         {status !== "loading" && sessionData && (
                             <>
-                                <OrgCreateTodo />
+                                <div className="flex flex-col items-center md:flex-row justify-between md:justify-around">
+                                    <OrgCreateTodo />
+                                    <OrgStopWatch />
+                                </div>
                                 <OrgTodos />
                             </>
                         )}
@@ -58,7 +61,6 @@ export function TplIndex() {
                         )}
                     </main>
                 </div>
-
             </div>
         </>
     );
