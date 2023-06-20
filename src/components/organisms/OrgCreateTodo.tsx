@@ -4,7 +4,7 @@ import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import { MolInputText } from "../molecules/MolInputText";
-import { useResetTimeState } from "~/hooks/resetTimeState";
+import { useResetTimeStore } from "~/store";
 
 export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
@@ -72,7 +72,7 @@ export function OrgCreateTodo() {
         setNewTodo(targetValue)
     };
 
-    const toggle = useResetTimeState((state) => state.toggleResetFlg);
+    const toggle = useResetTimeStore((state) => state.toggleResetFlg);
 
     return (
         <div className="gap-3 w-auto md:w-9/12">

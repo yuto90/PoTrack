@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, type ChangeEvent } from 'react';
-import { useResetTimeState } from '~/hooks/resetTimeState';
+import { useResetTimeStore } from '~/store';
 import { convertTime } from '~/utils/helper';
 
 export const OrgStopWatch: React.FC = () => {
@@ -38,7 +38,7 @@ export const OrgStopWatch: React.FC = () => {
         localStorage.setItem('time', String(time));
     }, [time]);
 
-    const resetFlg = useResetTimeState((state) => state.resetFlg);
+    const resetFlg = useResetTimeStore((state) => state.resetFlg);
 
     // OrgCreateTodoでリセットフラグが更新されたら発火
     useEffect(() => {
@@ -102,3 +102,4 @@ export const OrgStopWatch: React.FC = () => {
         </div>
     );
 };
+
