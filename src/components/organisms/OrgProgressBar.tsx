@@ -1,5 +1,6 @@
 import type { Todo } from "~/server/types";
-import { type STATUS_LIST, statusColor } from "~/utils/helper";
+import { type STATUS_LIST } from "~/type/statusList";
+import { statusColor } from "~/utils/helper";
 
 type ProgressBarProps = {
     todos: Todo[];

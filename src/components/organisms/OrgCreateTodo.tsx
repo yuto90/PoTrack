@@ -81,7 +81,6 @@ export function OrgCreateTodo() {
                 inputValue={newTodo}
                 inputPlaceholder="New Todo..."
                 onChange={overwriteTodo}
-                // onSubmit={createTodo}
                 onSubmit={
                     () => {
                         createTodo();

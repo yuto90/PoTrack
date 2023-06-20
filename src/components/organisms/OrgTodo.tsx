@@ -2,8 +2,9 @@ import { type ChangeEvent, useState } from "react";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
-import { STATUS_LIST, convertTime, statusColor } from "~/utils/helper";
+import { convertTime, statusColor } from "~/utils/helper";
 import { AtomButton } from "../atoms/AtomButton";
+import { STATUS_LIST } from "~/type/statusList";
 
 type TodoProps = {
     todo: Todo;
