@@ -19,10 +19,8 @@ interface CurrentTodoStore {
     time: string
 }
 
-// ストップウォッチを別ファイルから初期化する用のHooks
 export const useCurrentTodoStore = create<CurrentTodoStore>((set) => ({
     title: "",
     status: "BACKLOG",
-    time: ""
-    //toggleResetFlg: () => set((state) => ({ resetFlg: !state.resetFlg })),
+    time: "",
 }));

@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "~/server/api/root";
 
@@ -22,7 +21,7 @@ export const createInput = z.object({
     time: z.number()
 })
 
-
+// タスク名を更新する用
 export const updateInput = z.object({
     id: z.string(),
     text: z

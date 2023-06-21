@@ -18,6 +18,7 @@ export function OrgTodo({ todo }: TodoProps) {
 
     const trpc = api.useContext();
 
+    // todo カスタムフックに処理をまとめる
     const { mutate: deleteMutation } = api.todo.delete.useMutation({
         onMutate: async (deleteId) => {
             await trpc.todo.all.cancel();
