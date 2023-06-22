@@ -8,3 +8,9 @@
 - TailWindCss
 - NextAuth.js
 - tRPC
+
+## how to use
+```bash
+supabase start
+npm start
+```
