@@ -12,5 +12,5 @@
 ## how to use
 ```bash
 supabase start
-npm start
+npm run dev
 ```
