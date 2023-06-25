@@ -1,4 +1,5 @@
 // as const オブジェクトのプロパティ全体をreadonly かつリテラル型として扱う
+// todo 変数名と型のネーミングが被ってる
 export const STATUS_LIST = {
     BACKLOG: 'BACKLOG',
     TODO: 'TODO',
