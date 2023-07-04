@@ -4,17 +4,10 @@ import { createInput } from "~/server/types";
 import type { Todo } from "~/server/types";
 import { api } from "~/utils/api";
 import { MolInputText } from "../molecules/MolInputText";
-import { OrgStopWatch } from "./OrgStopWatch";
+import { useResetTimeStore } from "~/store";
 
 export function OrgCreateTodo() {
     const [newTodo, setNewTodo] = useState("");
-
-    // todo OrgからOrg呼ぶのやめたい。ストップウォッチのリセット関数のみ呼び出したい
-    // OrgStopWatchに渡す画面のストップウォッチのリセットフラグ
-    // 1, createTodo関数が成功したらフラグを更新
-    // 2, フラグの更新をOrgStopWatchに伝える
-    // 3, 変更を検知したらuseEffectでリセット関数を実行させる
-    const [isResetTime, setIsResetTime] = useState<boolean>(false);
 
     // フロントエンドにキャッシュされているtodoデータを書き換える用にキャッシュへのアクセスできるフックを用意
     const trpc = api.useContext();
@@ -72,8 +65,6 @@ export function OrgCreateTodo() {
         }
 
         mutate(input)
-        // リセットフラグを更新して変更をOrgStopWatchに伝える
-        setIsResetTime(!isResetTime);
     }
 
     // input内の値が変化した時useStateの更新用関数で変数を更新
@@ -81,19 +72,22 @@ export function OrgCreateTodo() {
         setNewTodo(targetValue)
     };
 
+    const toggle = useResetTimeStore((state) => state.toggleResetFlg);
+
     return (
-        <div className="flex flex-col items-center md:flex-row justify-between md:justify-around">
-            <div className="gap-3 w-auto md:w-9/12">
-                <MolInputText
-                    btnText="Create"
-                    inputValue={newTodo}
-                    inputPlaceholder="New Todo..."
-                    onChange={overwriteTodo}
-                    onSubmit={createTodo}
-                />
-            </div>
-            {/* isResetTimeに変更があった時に再レンダリングさせる */}
-            <OrgStopWatch reset={isResetTime} />
+        <div className="gap-3 w-auto md:w-9/12">
+            <MolInputText
+                btnText="Create"
+                inputValue={newTodo}
+                inputPlaceholder="New Todo..."
+                onChange={overwriteTodo}
+                onSubmit={
+                    () => {
+                        createTodo();
+                        toggle();
+                    }
+                }
+            />
         </div>
     );
 }

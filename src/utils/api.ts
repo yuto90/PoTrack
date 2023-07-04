@@ -27,6 +27,14 @@ export const api = createTRPCNext<AppRouter>({
        * @see https://trpc.io/docs/data-transformers
        */
       transformer: superjson,
+      queryClientConfig: {
+        defaultOptions: {
+          // retry fetchに失敗したら3回までリトライする
+          // refetchOnWindowFocus ウィンドウのフォーカスが外れて再度当たった時にfetchが走る
+          queries: { retry: false, refetchOnWindowFocus: false }
+        }
+      },
+
 
       /**
        * Links used to determine request flow from client to server.
